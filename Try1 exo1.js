@@ -17,7 +17,7 @@ search.addEventListener('input', () => {
 //Str (whole string)
 //before (object to replace)
 //after (what it is replaced with)
-*/
+
 function MyReplace(str, before, after) {
  if {
     before[0] === before [0].toUpperCase();
@@ -38,3 +38,4 @@ function myReplace(str, before, after) {
     let replaced = str.splice(i,1)
 }
 Map()
+*/
