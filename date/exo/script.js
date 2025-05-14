@@ -24,20 +24,21 @@ function addTask() {
         supprimer.onclick = function() {
             li.remove()
         }
-
+        
         const modifier = document.createElement('button')
         modifier.textContent = 'Modifier'
         modifier.classList = 'modifier'
-        modifier.style.backgroundColor = 'yellow'
-        modifier.style.color = 'black'
+        modifier.style.backgroundColor = 'blue'
+        modifier.style.color = 'white'
         modifier.onclick = function() {
             editTask(span, modifier)
         }
-
+        
         li.appendChild(span)
+        li.appendChild(modifier)
         li.appendChild(terminé)
         li.appendChild(supprimer)
-        li.appendChild(modifier)
+
 
 
         document.querySelector('.task-list').appendChild(li);
@@ -54,3 +55,4 @@ function moveToCompleted(li) {
     if (modifier) modifier.remove()
     
     completedList.appendChild(li)
+    }
