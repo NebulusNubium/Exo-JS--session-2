@@ -1,13 +1,7 @@
 //Exo 1
-/*function message(){
-    const message = 'welcome to JS!'
-    const container = document.getElementById('welcome')
-    container.textContent = message
-}
-
 setTimeout(function(){
-    message()
-}, 2000)
+  document.getElementById('welcome').textContent = 'welcome to JS!'
+}, 2000);
 
 //exo 2
 let seconds = 5
@@ -17,7 +11,6 @@ container.textContent = "Virus injecté dans..."+seconds
 
 const timer = setInterval(() => {
   seconds--
-
   if (seconds > 0) {
     container.textContent = "Virus injecté dans..."+seconds
   } else {
@@ -25,7 +18,7 @@ const timer = setInterval(() => {
     clearInterval(timer)
   }
 }, 1000)
-*/
+
 //exo 3
 
 let seconds = 10
@@ -46,6 +39,6 @@ const timer = setInterval(() => {
     clearInterval(timer)
   }
 }, 500)
-
-
+message = container.textContent = "Virus injecté dans..."+(seconds+1)/2
+alert (message)
 //Exo 4
