@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Popup with Countdown</title>
+  <style>
+    #customAlert {
+      display: none;
+      position: fixed;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      padding: 20px;
+      border: 2px solid black;
+      box-shadow: 0 0 100px rgba(0,0,0,1);
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+
+  <button onclick="showPopup()">Click moi si tu m'aimes</button>
+
+  <div id="customAlert">
+    <p id="alertMessage">Virus injecté dans: 5</p>
+  </div>
+
+  <script>
+    function showPopup() {
+      const popup = document.getElementById("customAlert");
+      const message = document.getElementById("alertMessage");
+      let seconds = 5;
+
+      popup.style.display = "block";
+      message.textContent = "Virus injecté dans " + seconds;
+
+      const interval = setInterval(() => {
+        seconds--;
+        if (seconds > 0) {
+          message.textContent = "Virus injecté dans " + seconds;
+        } else {
+          message.textContent = "AHAH gotcha :D!";
+          clearInterval(interval);
+          // Optional: hide popup after 1s
+          setTimeout(() => popup.style.display = "none", 1500);
+        }
+      }, 500);
+    }
+  </script>
+
+</body>
+</html>

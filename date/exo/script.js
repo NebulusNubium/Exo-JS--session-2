@@ -1,7 +1,7 @@
 function addTask() {
     const input = document.getElementById('task-input');
        const taskText = input.value.trim()
-
+    localStorage.setItem('text', taskText)
     if (taskText !== "") {
 
         const li = document.createElement('li');

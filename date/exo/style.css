@@ -1,6 +1,6 @@
 button {
     padding: 12px 25px;
-    margin-left: 2rem;
+    position: absolute;
     background-color: blue;
     color: white;
     border-radius: 10px;
@@ -8,12 +8,15 @@ button {
     cursor: pointer;
     margin-bottom: 1rem;
 }
-
-.btns {
-    display: flex;
-    justify-content: center;
+.supprimer {
+    right: 20%;
 }
-
+.modifier {
+    right: 40%;
+}
+.terminé {
+    right: 30%;
+}
 p {
     font-size: 2rem;
     font-weight: bold;
@@ -25,6 +28,13 @@ input {
     height: 2rem;
 }
 
+.modifier, .terminé, .supprimer {
+    font-size: 1rem;
+}
+
 ul {
     list-style: none;
+}
+li {
+    position: relative;
 }

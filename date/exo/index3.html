@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Liste de Tâches</title>
+  <style>
+    .error { color: red; }
+    .task { display: flex; align-items: center; gap: 10px; margin: 5px 0; }
+    .task input[type="text"] { width: 200px; }
+    .task-date { color: green; margin-left: 10px; }
+
+    /* css boutons */
+    .btn-create, .btn-modify {
+      background-color: blue;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .btn-toggle {
+      background-color: yellow;
+      color: black;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .btn-delete {
+      background-color: red;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    button:hover {
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <h1>Liste de Tâches</h1>
+  <input type="text" id="taskInput" placeholder="Nom de la tâche">
+  <input type="date" id="dateInput">
+  <button id="addBtn" class="btn-create" onclick="addTask()">Créer la tâche</button>
+  <p id="error" class="error"></p>
+
+  <h2>Tâches en cours</h2>
+  <ul id="currentTasks"></ul>
+
+  <h2>Tâches terminées</h2>
+  <ul id="completedTasks"></ul>
+
+  <script>
+    const currentTasks = document.getElementById('currentTasks');
+    const completedTasks = document.getElementById('completedTasks');
+    const error = document.getElementById('error');
+    const taskInput = document.getElementById('taskInput');
+    const dateInput = document.getElementById('dateInput');
+
+    function taskExists(name) {
+      const allTasks = [...currentTasks.children, ...completedTasks.children];
+      return allTasks.some(li => li.dataset.name.toLowerCase() === name.toLowerCase());
+    }
+
+    function addTask() {
+      const name = taskInput.value.trim();
+      const date = dateInput.value;
+      error.textContent = '';
+
+      if (!name) {
+        error.textContent = "Le nom de la tâche ne peut pas être vide";
+        return;
+      }
+      if (taskExists(name)) {
+        error.textContent = "Cette tâche existe déjà";
+        return;
+      }
+      createTaskElement(name, date, currentTasks);
+      taskInput.value = '';
+      dateInput.value = '';
+    }
+
+    function createTaskElement(name, date, list) {
+      const li = document.createElement('li');
+      li.className = 'task';
+      li.dataset.name = name;
+
+      const nameSpan = document.createElement('span');
+      nameSpan.textContent = name;
+      li.appendChild(nameSpan);
+
+      const dateSpan = document.createElement('span');
+      dateSpan.className = 'task-date';
+      dateSpan.textContent = date;
+      li.appendChild(dateSpan);
+
+      const modifyBtn = document.createElement('button');
+      modifyBtn.className = 'btn-modify';
+      modifyBtn.textContent = 'Modifier';
+      modifyBtn.onclick = () => modifyTask(li, nameSpan, modifyBtn);
+      li.appendChild(modifyBtn);
+
+      const toggleBtn = document.createElement('button');
+      toggleBtn.className = 'btn-toggle';
+      toggleBtn.textContent = list === currentTasks ? 'Terminé' : 'En cours';
+      toggleBtn.onclick = () => moveTask(li);
+      li.appendChild(toggleBtn);
+
+      const deleteBtn = document.createElement('button');
+      deleteBtn.className = 'btn-delete';
+      deleteBtn.textContent = 'Supprimer';
+      deleteBtn.onclick = () => li.remove();
+      li.appendChild(deleteBtn);
+
+      list.appendChild(li);
+    }
+
+    function modifyTask(li, nameSpan, button) {
+      const input = document.createElement('input');
+      input.type = 'text';
+      input.value = nameSpan.textContent;
+
+      const validateBtn = document.createElement('button');
+      validateBtn.className = 'btn-modify';
+      validateBtn.textContent = 'Valider';
+      validateBtn.onclick = () => {
+        const newName = input.value.trim();
+        error.textContent = '';
+
+        if (!newName) {
+          error.textContent = "Le nom de la tâche ne peut pas être vide";
+          return;
+        }
+        if (taskExists(newName) && newName.toLowerCase() !== nameSpan.textContent.toLowerCase()) {
+          error.textContent = "Cette tâche existe déjà";
+          return;
+        }
+        nameSpan.textContent = newName;
+        li.dataset.name = newName;
+        li.replaceChild(nameSpan, input);
+        li.replaceChild(button, validateBtn);
+      };
+
+      li.replaceChild(input, nameSpan);
+      li.replaceChild(validateBtn, button);
+    }
+
+    function moveTask(li) {
+      const from = li.parentElement;
+      const to = from === currentTasks ? completedTasks : currentTasks;
+      const name = li.dataset.name;
+      const date = li.querySelector('.task-date').textContent;
+      li.remove();
+      createTaskElement(name, date, to);
+    }
+  </script>
+</body>
+</html>
